@@ -1,0 +1,87 @@
+{:nrepl {:port 8777}
+
+ :deps {:aliases [:dev]}
+
+ :dev-http
+ {4200 "public"}
+
+ :builds
+ {:app {:target :browser
+
+        :output-dir "public/js"
+        :asset-path "/js"
+        :module-loader true
+        :modules
+        {:main {:init-fn amp.core/init!}
+
+         :landing-view {:entries [amp.pages.landing.page]
+                        :depends-on #{:main}}
+
+         :video-background {:entries [amp.ui.video-background]
+                            :depends-on #{:main}}
+
+         :budget-view {:entries [amp.pages.budget.page]
+                       :depends-on #{:main}}
+
+         :mockup-view {:entries [amp.pages.mockup.page]
+                       :depends-on #{:main}}
+
+         :venue-view {:entries [amp.pages.venue.page]
+                      :depends-on #{:main}}
+
+         :artist-view {:entries [amp.pages.artist.page]
+                       :depends-on #{:main}}
+
+         :blog-view {:entries [amp.pages.blog.page]
+                     :depends-on #{:main}}
+
+         :press-view {:entries [amp.pages.press.page]
+                      :depends-on #{:main}}}
+        :build-hooks [(git-hash/hook)]
+        :devtools {:reload-strategy :full
+                   :repl-pprint true
+                   :preloads [amp.dev user]}
+        :dev {:js-options {:output-feature-set :es-unsupported
+                           :language-in :unsupported}
+              :compiler-options {:output-feature-set :es8}}}
+
+  :release {:target :browser
+            :output-dir "release/js"
+            :asset-path "/js"
+            :module-loader true
+            :modules
+            {:main {:init-fn amp.core/init!}
+
+             :landing-view {:entries [amp.pages.landing.page]
+                            :depends-on #{:main}}
+
+             :video-background {:entries [amp.ui.video-background]
+                                :depends-on #{:main}}
+
+             :budget-view {:entries [amp.pages.budget.page]
+                           :depends-on #{:main}}
+
+
+             :mockup-view {:entries [amp.pages.mockup.page]
+                           :depends-on #{:main}}
+
+             :venue-view {:entries [amp.pages.venue.page]
+                          :depends-on #{:main}}
+
+             :artist-view {:entries [amp.pages.artist.page]
+                           :depends-on #{:main}}
+
+             :blog-view {:entries [amp.pages.blog.page]
+                         :depends-on #{:main}}
+
+             :press-view {:entries [amp.pages.press.page]
+                          :depends-on #{:main}}}
+            :build-hooks [(git-hash/hook)]
+            :js-options {:output-feature-set :es-unsupported
+                         :language-in :unsupported}
+            :compiler-options {:output-feature-set :es8
+                               :infer-externs true
+                               :externs ["externs/three.ext.js"]
+                               :optimizations :advanced
+                               :pretty-print true
+                               :pseudo-names true}}}}

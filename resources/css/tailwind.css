@@ -1,0 +1,203 @@
+@import url("https://use.typekit.net/bsd2yit.css");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes lazy-img-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+
+
+.v-for-w {
+  width: 100vh;
+}
+
+.hero-nav-links {
+    color: #131313;
+}
+
+.my-buddy {
+    animation: fadeInBorder 5s ease-in-out forwards;
+    animation-delay: 1s;
+    border-bottom: 2px solid transparent;
+  }
+
+  @keyframes fadeInBorder {
+    from {
+      border-color: transparent;
+    }
+    to {
+      border-color: #000;
+    }
+  }
+
+.massive-title {
+    font-size: 24em;
+    font-family: "source-code-pro", monospace;
+    font-weight: 600;
+    color: #EAEAEA;
+    opacity: 0;
+    
+    letter-spacing: -0.1em;
+    pointer-events: false;
+}
+
+.flash-text{
+    font-size:20rem;
+    letter-spacing: -1rem;
+    text-align:middle;
+    text-anchor:middle;
+    stroke-width:10px;
+    
+    fill: rgba(255, 239, 239, 0.8);
+  }
+
+.orange-grad {
+    background: linear-gradient(246.25deg, #FFC700 -88.21%, #EE0909 174.55%);
+}
+
+.blue-grad {
+    background: linear-gradient(246.25deg, #4260FC -88.21%, #00FF38 174.55%);
+}
+
+.grey-grad {
+    background: linear-gradient(246.25deg, #f8fafc -88.21%, #f1f5f9 174.55%);
+}
+
+:is(.dark) .grey-grad {
+    background: linear-gradient(246.25deg, #222222 -88.21%, #0F0F0F 174.55%);
+}
+
+/* Fine pinstripe — light: subtle slate lines, dark: faint white lines */
+.pinstripe {
+    background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 4px,
+        rgba(148, 163, 184, 0.12) 4px,
+        rgba(148, 163, 184, 0.12) 5px
+    );
+}
+
+:is(.dark) .pinstripe {
+    background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 4px,
+        rgba(255, 255, 255, 0.06) 4px,
+        rgba(255, 255, 255, 0.06) 5px
+    );
+}
+
+/* Bold pinstripe — light: slate bands, dark: charcoal bands */
+.pinstripe-bold {
+    background-color: #f1f5f9;
+    background-image: repeating-linear-gradient(
+        45deg,
+        #e2e8f0 0px,
+        #e2e8f0 10px,
+        #f1f5f9 10px,
+        #f1f5f9 20px
+    );
+}
+
+:is(.dark) .pinstripe-bold {
+    background-color: #181818;
+    background-image: repeating-linear-gradient(
+        45deg,
+        #1f1f1f 0px,
+        #1f1f1f 10px,
+        #181818 10px,
+        #181818 20px
+    );
+}
+
+.purple-grad {
+    background: linear-gradient(246.25deg, #8D43A7 -88.21%, #FC4242 174.55%);
+}
+
+.pink-grad {
+    background: linear-gradient(246.25deg, #dd0ba2 -88.21%, #752941 174.55%);
+}
+
+.blue-light-grad {
+     background: linear-gradient(246.25deg, #74BCC4 -88.21%, #D7FAFF 174.55%);
+}
+
+.light-red-grad {
+     background: linear-gradient(246.25deg, #C47474 -88.21%, #FFF2E8 174.55%);
+}
+
+.blue-purple-grad {
+     background: linear-gradient(125.25deg, #49A1FF -88.21%, #D089FF 174.55%);
+}
+
+.playable-text-background {
+    background-color:rgba(238, 29, 35, 0.71);
+}
+
+.section-background {
+    z-index: -1;
+}
+
+.warm-yellow {
+  background-color: #FFD400;
+}
+
+.deep-yellow {
+  background-color: #FCB93D;
+}
+
+.light-blue-font-color {
+  color: #24A399;
+}
+
+.background-video mux-player {
+  --media-object-fit: cover;
+  --media-object-position: center;
+  /* Hide all controls at once */
+  --controls: none;
+
+  /* Hide the error dialog */
+  --dialog: none;
+
+  /* Hide the loading indicator */
+  --loading-indicator: none;
+
+  /* Target all sections by excluding the section prefix */
+  --play-button: none;
+  --live-button: none;
+  --seek-backward-button: none;
+  --seek-forward-button: none;
+  --mute-button: none;
+  --captions-button: none;
+  --airplay-button: none;
+  --pip-button: none;
+  --fullscreen-button: none;
+  --cast-button: none;
+  --playback-rate-button: none;
+  --volume-range: none;
+  --time-range: none;
+  --time-display: none;
+  --duration-display: none;
+
+  /* Target a specific section by prefixing the CSS var with (top|center|bottom) */
+  --center-controls: none;
+  --bottom-play-button: none;
+}
+
+.embla {
+  overflow: hidden; 
+}
+
+.embla__slide {
+  
+   flex: 0 0 100%;
+   min-width: 0;
+  max-width: 100%;
+  
+  
+}

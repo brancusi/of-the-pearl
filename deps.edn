@@ -1,0 +1,24 @@
+{:paths
+ ["src" "build"]
+ :deps {lilactown/helix {:mvn/version "0.2.2"}
+        reagent/reagent {:mvn/version "2.0.1"}
+        doughamil/threeagent {:mvn/version "1.0.1"}
+        applied-science/js-interop {:mvn/version "0.3.3"}
+        nano-id/nano-id {:mvn/version "1.0.0"}
+        metosin/reitit {:mvn/version "0.10.0"}
+        party.donut/system {:mvn/version "1.0.257"}
+        org.clojure/clojurescript {:mvn/version "1.12.134"}}
+
+ :aliases
+ {:dev
+  {:extra-paths ["dev"]
+   :extra-deps
+   {nrepl/nrepl {:mvn/version "1.5.1"}
+    party.donut/system {:mvn/version "1.0.257"}
+    thheller/shadow-cljs {:mvn/version "3.3.5"}
+    org.clojure/clojure {:mvn/version "1.12.0"}
+    djblue/portal {:mvn/version "0.62.2"}}}
+
+  :test
+  {:extra-deps
+   {thheller/shadow-cljs {:mvn/version "3.3.5"}}}}}
