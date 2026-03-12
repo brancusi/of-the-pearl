@@ -1,6 +1,5 @@
 (ns otp.ui.image
-  (:require [helix.core :refer [$]]
-            [helix.hooks :as hooks]
+  (:require [helix.hooks :as hooks]
             [helix.dom :as d]
             [otp.utils.gsap :as gsap]
             [otp.lib.defnc :refer [defnc]]))
@@ -58,43 +57,77 @@
     (set! (.-onerror image) on-error)
     (set! (.-src image) url)))
 
+(defn- build-imgix-params
+  [{:keys [imgix-fit crop fp-x fp-y fp-z]}]
+  (let [fit (or imgix-fit "clip")
+        focalpoint? (and (= fit "crop")
+                         (= crop "focalpoint"))]
+    (str "?fit=" fit
+         (when crop
+           (str "&crop=" crop))
+         (when (and focalpoint? (some? fp-x))
+           (str "&fp-x=" fp-x))
+         (when (and focalpoint? (some? fp-y))
+           (str "&fp-y=" fp-y))
+         (when (and focalpoint? (some? fp-z))
+           (str "&fp-z=" fp-z))
+         "&auto=format,compress"
+         "&q=75")))
+
 (defnc lazy-image
-  "Renders an image element with lazy loading using imgix API. The image will only load when the `should-load?` flag is set to true.
-  
-  Parameters:
-  - src: The imgix image source URL.
-  - w: Target width in pixels.
-  - h: Target height in pixels.
-  - fp-x: Focal point x-coordinate (0-1).
-  - fp-y: Focal point y-coordinate (0-1).
-  - should-load?: A boolean value determining if the image should be loaded.
-  - transition: GSAP transition object for intro animation.
-  - on-intro-completed: Callback function when intro animation completes.
+  "Lazy-loaded image with imgix optimization and GSAP intro animation.
 
-  Returns:
-  - An image element if the image is loaded, otherwise a div element with a gray background.
+  Loads only when `should-load?` is true. Dimensions are snapped to
+  cache-friendly buckets (see `size-buckets`) so nearby viewport sizes
+  share the same imgix render. A DPR-based srcset (1×–3×) is generated
+  automatically.
 
-  Example usage:
-  (lazy-image {:src \"https://example.imgix.net/image.jpg\"
-               :w 1920
-               :h 1080
-               :fp-x 0.5
-               :fp-y 0.5
-               :should-load? true})"
-  [{:keys [src w h fp-x fp-y fit object-fit should-load? transition on-intro-completed children]}]
+  Two-phase loading:
+  1. **Preload** — image bytes fetched and decoded off-screen.
+  2. **Paint** — `<img>` fires onLoad; GSAP `transition` runs, then
+     `children` overlay fades in.
 
-  (let [;; Snap dimensions to cache-friendly buckets, preserving aspect ratio.
+  While loading, a pulsing-dot indicator is shown.
+
+  Props:
+  - `src`         — imgix image URL (required).
+  - `w`, `h`      — target dimensions in px (snapped up to nearest bucket).
+  - `imgix-fit`   — imgix fit mode: \"clip\" (default), \"crop\", etc.
+                     Legacy alias: `fit`.
+  - `layout-fit`  — CSS object-fit: \"cover\" (default), \"contain\",
+                     \"fill\", \"none\". Legacy alias: `object-fit`.
+  - `crop`        — imgix crop strategy, e.g. \"focalpoint\", \"entropy\".
+  - `fp-x`, `fp-y`, `fp-z` — focal-point coordinates (0–1), used when
+                     `imgix-fit` is \"crop\" and `crop` is \"focalpoint\".
+  - `should-load?` — boolean gate; image is not fetched until true.
+  - `transition`   — GSAP tween vars applied to the image on reveal.
+  - `on-intro-completed` — callback fired when the GSAP tween finishes.
+  - `children`     — React children rendered as an overlay after paint.
+
+  Example:
+    (lazy-image {:src \"https://example.imgix.net/photo.jpg\"
+                 :w 1200 :h 800
+                 :imgix-fit \"crop\"
+                 :crop \"focalpoint\"
+                 :fp-x 0.5 :fp-y 0.3
+                 :layout-fit \"cover\"
+                 :should-load? true
+                 :transition {:opacity 1 :duration 0.6}})"
+  [{:keys [src w h imgix-fit layout-fit crop fp-x fp-y fp-z fit object-fit should-load? transition on-intro-completed children]}]
+
+  (let [imgix-fit (or imgix-fit fit "clip")
+        layout-fit (or layout-fit object-fit "cover")
+        ;; Snap dimensions to cache-friendly buckets, preserving aspect ratio.
         [w h] (snap-dimensions w h)
 
-        ;; imgix best practices: use auto format, auto compression, and fit=crop with focal point
+        ;; fit/crop/focal point affect the imgix URL; layout-fit affects CSS only.
         base-params (hooks/use-memo
-                     [fp-x fp-y]
-                     (str "?fit=" (or fit "clip")
-                          "&crop=focalpoint"
-                          "&fp-x=" (or fp-x 0.5)
-                          "&fp-y=" (or fp-y 0.5)
-                          "&auto=format,compress"
-                          "&q=75"))
+                     [imgix-fit crop fp-x fp-y fp-z]
+                     (build-imgix-params {:imgix-fit imgix-fit
+                                          :crop crop
+                                          :fp-x fp-x
+                                          :fp-y fp-y
+                                          :fp-z fp-z}))
 
         ;; Primary src with target dimensions 
         img-src (hooks/use-memo
@@ -117,7 +150,7 @@
         ;;   Image cannot overflow because inset-0 pins it to the container edges.
         ;; - "contain": absolute-positioned, fits within container, letterboxed.
         ;; - "none": normal flow, w-full h-auto (image height dictates layout).
-        img-class (case object-fit
+        img-class (case layout-fit
                     "cover"   "absolute inset-0 w-full h-full object-cover block"
                     "contain" "absolute inset-0 w-full h-full object-contain block"
                     "fill"    "absolute inset-0 w-full h-full object-fill block"

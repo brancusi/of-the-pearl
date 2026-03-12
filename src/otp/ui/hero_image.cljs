@@ -34,7 +34,7 @@
   [{:keys [img-src children]}]
   (let [image-container (hooks/use-ref "image-container")
         dimensions (use-container-size image-container)
-        normalized-dimensions (normalize-dimensions dimensions :width 10)]
+        _normalized-dimensions (normalize-dimensions dimensions :width 10)]
     (d/div {:class ""
             :ref image-container}
            ($ lazy-image {:src img-src
@@ -43,7 +43,7 @@
                           :h 350
                           ;;  Simply force the width on this and allow the height to just flow
                           #_#_:h (:height normalized-dimensions)
-                          :object-fit "none"
+                          :layout-fit "none"
                           :transition {:duration 0.25
                                        :opacity 1}
                           :should-load? true})

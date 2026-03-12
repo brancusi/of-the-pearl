@@ -32,7 +32,7 @@
                w-20 aspect-square sm:w-36
                flex-shrink-0 rounded-sm overflow-hidden"}
       ($ lazy-image-with-overlay {:img-src img
-                                  :fit "crop"
+                                  :imgix-fit "crop"
                                   :aspect-ratio 1
                                   :active? visible?}))
 

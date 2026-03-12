@@ -1,6 +1,5 @@
 (ns otp.pages.budget.committee
   (:require
-   [otp.ui.captioned-image :refer [captioned-image]]
    [otp.ui.expandable-text :refer [expandable-text-area-2]]
    [otp.lib.defnc :refer [defnc]]
    [otp.ui.image-overlay :refer [lazy-image-with-overlay]]
@@ -84,12 +83,11 @@
                         "hopefully encouraging others more able to realize our goal."))))
 
 (defnc committee-member-card
-  [{:keys [name role img-src credit]
-    :as opts}]
+  [{:keys [name role img-src]}]
   (let [overlay-styles (s/cx s/font-ui "bg-white/70 px-1 text-slate-500")]
     (d/div {:class "w-[150px] aspect-[0.7] relative ml-2"}
            ($ lazy-image-with-overlay {:img-src img-src
-                                       :fit "crop"
+                                       :imgix-fit "crop"
                                        :aspect-ratio 0.7
                                        :active? true}
               (d/div {:class ""}

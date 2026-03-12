@@ -30,9 +30,9 @@
      :src          — imgix image URL (required)
      :aspect-ratio — CSS aspect-ratio string, e.g. \"16/9\", \"1.34\" (default \"16/9\")
      :caption      — optional figcaption text
-     :fit          — imgix fit mode passed to lazy-image (default \"cover\")
+    :layout-fit   — CSS object-fit mode passed to lazy-image (default \"cover\")
      :class        — additional classes on the outer <figure>"
-  [{:keys [src aspect-ratio caption fit class]}]
+  [{:keys [src aspect-ratio caption layout-fit fit class]}]
   (let [aspect (or aspect-ratio "16/9")
         ref (hooks/use-ref nil)
         [_visited? visible?] (use-intersection-observer ref)
@@ -49,7 +49,7 @@
                                     :w width
                                     :h height
                                     :should-load? visible?
-                                    :object-fit (or fit "cover")
+                                    :layout-fit (or layout-fit fit "cover")
                                     :transition {:opacity 1 :duration 0.6 :ease "power2.out"}}))
               (when caption
                 (d/figcaption {:class (s/cx s/font-data s/text-xs s/text-muted

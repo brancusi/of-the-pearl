@@ -26,8 +26,16 @@ module.exports = {
         // Override Tailwind's default mono to use Source Code Pro everywhere
         mono: ["source-code-pro", "monospace"],
 
+        // OCR-B Std (Typekit) — decorative/display monospace
+        ocr: ["ocr-b-std", "monospace"],
+
         // Keep Inter as sans fallback (unused in design system, but safe default)
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
+      },
+      fontSize: {
+        "10xl": ["10rem", {}],
+        "11xl": ["12rem", {}],
+        "12xl": ["14rem", {}],
       },
     },
     screens,

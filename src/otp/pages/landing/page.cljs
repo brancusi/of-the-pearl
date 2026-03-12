@@ -23,32 +23,33 @@
 
     ($ :div {:ref container-ref
              :class (str "overflow-x-hidden grey-grad " s/text-primary)}
-       (when is-desktop?
-         ($ logo-nav))
+       #_(when is-desktop?
+           ($ logo-nav))
 
        ($ section
           {:key "hero"
            :section-id "hero"}
           ($ mobile-hero-section))
 
-       ($ section
-          {:key "teaser"
-           :section-id "teaser"}
-          ($ teaser-section))
+       #_($ section
+            {:key "teaser"
+             :section-id "teaser"}
+            ($ teaser-section))
 
-       (d/div {:class s/content-column-container}
+       #_(d/div {:class s/content-column-container}
 
-              (d/div {:class (str "flex flex-col " s/content-column)}
-                     ($ press-release {:id "press-release"
-                                       :title "Press Release"})
-                     ($ about-studio {:id "about-studio"
-                                      :title "The Studio"})
+                (d/div {:class (str "flex flex-col " s/content-column)}
+                       "OTP"
+                       #_($ press-release {:id "press-release"
+                                           :title "Press Release"})
+                       #_($ about-studio {:id "about-studio"
+                                          :title "The Studio"})
 
-                     ($ location-section {:id "venue"
-                                          :title "The Venue"})
-                     ($ in-minor-keys {:id "in-minor-keys"
-                                       :title "In Minor Keys"})
-                     ($ artist-section {:id "artist"
-                                        :title "The Artist"})
-                     ($ curators-section {:id "curators"
-                                          :title "Curators"}))))))
+                       #_($ location-section {:id "venue"
+                                              :title "The Venue"})
+                       #_($ in-minor-keys {:id "in-minor-keys"
+                                           :title "In Minor Keys"})
+                       #_($ artist-section {:id "artist"
+                                            :title "The Artist"})
+                       #_($ curators-section {:id "curators"
+                                              :title "Curators"}))))))

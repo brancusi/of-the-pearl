@@ -33,7 +33,7 @@
                w-24 aspect-square sm:w-40
                flex-shrink-0 rounded-sm overflow-hidden"}
       ($ lazy-image-with-overlay {:img-src "https://atd-722658831.imgix.net/portraits/koyo.png"
-                                  :fit "crop"
+                                  :imgix-fit "crop"
                                   :aspect-ratio 1
                                   :active? visible?}))
 

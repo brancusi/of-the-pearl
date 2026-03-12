@@ -31,7 +31,7 @@
             (d/div
              {:class "w-full sm:w-2/5 flex-shrink-0 aspect-[3/4] rounded-sm overflow-hidden mb-8 sm:mb-0"}
              ($ lazy-image-with-overlay {:img-src "https://atd-722658831.imgix.net/portraits/zz-portrait-2.jpg"
-                                         :fit "crop"
+                                         :imgix-fit "crop"
                                          :aspect-ratio 0.75
                                          :active? visible?}))
 

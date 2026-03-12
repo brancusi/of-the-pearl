@@ -75,13 +75,6 @@
                       [[path route-data]])))
                 site-map)))
 
-(comment
-
-  (routes)
-
-  ;;Keep from folding
-  )
-
 (defnc router
   [{:keys [children]}]
 
@@ -91,7 +84,6 @@
         route-change-callback (hooks/use-callback
                                [state]
                                (fn [new-route]
-                                 (js/console.log new-route)
                                  (let [old-route (:current-route state)
                                        old-path  (:path old-route)]
 

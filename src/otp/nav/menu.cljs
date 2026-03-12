@@ -1,8 +1,9 @@
 (ns otp.nav.menu
   (:require [otp.lib.defnc :refer [defnc]]
-            [otp.services.router :refer [site-map]]
+            [otp.nav.pearl-logo :refer [pearl-logo]]
             [otp.state.provider :refer [use-main-state]]
             [otp.styles :as s]
+            [otp.ui.icons :refer [ShoppingBagIcon]]
             [otp.ui.theme-toggle :refer [theme-toggle]]
             [helix.core :refer [$ <>]]
             [helix.dom :as d]
@@ -34,64 +35,11 @@
                                  "-rotate-45 translate-y-0"
                                  "translate-y-[5px]"))})))
 
-;; ---------------------------------------------------------------------------
-;; Nav links for the menu — only the primary public pages (not budget/mockups)
-;; ---------------------------------------------------------------------------
-
-(def nav-items
-  "The pages to show in the main menu.
-   Derived from site-map, filtered to the public-facing pages."
-  [{:path "/" :title "Home"}
-   {:path "/visit" :title "Visit"}
-   {:path "/artist" :title "Artist"}
-   {:path "/blog" :title "Blog"}
-   #_{:path "/press" :title "Press"}])
-
-;; ---------------------------------------------------------------------------
-;; Cutout logo — W3Schools-style mix-blend-mode knockout.
-;; Black bg + white text + multiply = white text pixels become transparent,
-;; showing whatever page content is behind. For light mode we invert:
-;; white bg + black text + screen = same effect, light version.
-;;
-;; CRITICAL: this element must NOT live inside the nav's glass container
-;; (which has backdrop-filter → creates an isolation group that traps
-;; blend modes). It is rendered as a sibling fixed element.
-;; ---------------------------------------------------------------------------
-
-(defnc cutout-logo
-  "Fixed-position logo with CSS cutout text effect.
-   Page content bleeds through the letterforms as you scroll."
-  [_props]
-  (d/a {:href "/"
-        :class (s/cx "fixed top-0 left-0 z-50"
-                     "h-14 px-4 md:px-8 flex items-center"
-                     "bg-white dark:bg-black"
-                     "text-black dark:text-white"
-                     s/font-display
-                     "text-sm font-semibold uppercase tracking-widest"
-                     "mix-blend-multiply dark:mix-blend-screen"
-                     "hover:opacity-80 transition-opacity duration-200")}
-       "Armenian Pavilion"))
-
-(defnc menu-link [{:keys [path title active? on-click]}]
-  (d/a {:href path
-        :on-click on-click
-        :class (s/cx s/font-display
-                     "block py-5 md:py-0 text-2xl md:text-sm font-medium md:font-normal uppercase tracking-wider"
-                     "transition-colors duration-200"
-                     (if active?
-                       s/text-accent
-                       (str s/text-secondary " hover:text-pink-600 dark:hover:text-pink-300")))}
-       title))
-
 (defnc menu
   "Site navigation menu. Collapsible hamburger on mobile, horizontal bar on desktop."
   [_props]
   (let [[state _] (use-main-state)
         [open? set-open!] (hooks/use-state false)
-
-        current-route-name (-> state :current-route :data :name)
-        current-path (-> state :current-route :path)
 
         nav-ref (hooks/use-ref nil)
 
@@ -117,44 +65,53 @@
          (fn [] (.removeEventListener js/document "pointerdown" handler)))))
 
     (<>
-     ;; Cutout logo — rendered OUTSIDE the nav to avoid
-     ;; backdrop-filter isolation trapping the blend mode.
-     ($ cutout-logo)
-
      (d/nav {:ref nav-ref
              :class "fixed top-0 left-0 right-0 z-40"}
 
-            ;; ---- Top bar (frosted glass) ----
-            (d/div {:class (s/cx "flex items-center justify-between"
+            ;; ---- Top bar ----
+            (d/div {:class (s/cx "relative flex items-center justify-between"
                                  "px-4 md:px-8 h-14"
-                                 s/bg-glass
+                                 "bg-white"
                                  s/border-glass)}
 
-                   ;; Spacer matching the logo width so nav links don't overlap
-                   (d/div {:class "w-[170px] shrink-0"})
+                   ;; Left — logo
+                   (d/div {:class "flex items-center gap-3"}
+                          ;; Slate logo on mobile
+                          (d/img {:src   "/images/graphics/logo_slate.svg"
+                                  :alt   "Of The Pearl"
+                                  :class "md:hidden h-8 w-auto"})
+                          ;; Slate logo on desktop
+                          (d/img {:src   "/images/graphics/logo_slate.svg"
+                                  :alt   "Of The Pearl"
+                                  :class "hidden md:block h-8 w-auto"}))
 
-                   ;; Desktop nav links + theme toggle (hidden on mobile)
-                   (d/div {:class "hidden md:flex items-center gap-8"}
-                          (for [item nav-items]
-                            (let [active? (= (:path item) (or current-path "/"))]
-                              ($ menu-link {:key (:path item)
-                                            :path (:path item)
-                                            :title (:title item)
-                                            :active? active?
-                                            :& {}})))
-                          ;; Separator + theme toggle
-                          (d/div {:class (s/cx "pl-6 ml-2 border-l" s/border-subtle
-                                               "flex items-center")}
-                                 ($ theme-toggle)))
+                   ;; Center — animated pearl logo (absolute centered)
+                   (d/div {:class "absolute inset-0 flex items-center justify-center pointer-events-none px-32 md:px-48"}
+                          (d/div {:class "w-full pointer-events-auto"}
+                                 ($ pearl-logo {:should-play? true})))
 
-                   ;; Mobile hamburger button (hidden on desktop)
-                   (d/button {:class (s/cx "md:hidden p-2"
-                                           s/text-primary
-                                           "hover:text-pink-600 dark:hover:text-pink-300"
-                                           "transition-colors duration-200")
-                              :on-click toggle!
-                              :aria-label (if open? "Close menu" "Open menu")}
-                             ($ hamburger-icon {:open? open? :class "w-6 h-6"})))
+                   ;; Right — shopping bag + theme toggle + mobile hamburger
+                   (d/div {:class "flex items-center gap-4"}
+                          ;; Shopping bag
+                          (d/button {:class (s/cx "p-1" s/text-primary
+                                                  "hover:text-pink-600 dark:hover:text-pink-300"
+                                                  "transition-colors duration-200")
+                                     :aria-label "Shop"}
+                                    ($ ShoppingBagIcon {:class "w-5 h-5"}))
+
+                          ;; Theme toggle (desktop)
+                          (d/div {:class (s/cx "hidden md:flex items-center pl-4 border-l"
+                                               s/border-subtle)}
+                                 #_($ theme-toggle))
+
+                          ;; Mobile hamburger button
+                          (d/button {:class (s/cx "md:hidden p-2"
+                                                  s/text-primary
+                                                  "hover:text-pink-600 dark:hover:text-pink-300"
+                                                  "transition-colors duration-200")
+                                     :on-click toggle!
+                                     :aria-label (if open? "Close menu" "Open menu")}
+                                    ($ hamburger-icon {:open? open? :class "w-6 h-6"}))))
 
             ;; ---- Mobile slide-down panel (frosted glass) ----
             (d/div {:class (s/cx "md:hidden overflow-hidden"
@@ -165,13 +122,6 @@
                    (d/div {:class (s/cx s/bg-glass
                                         "px-6 pb-6 pt-2"
                                         "border-t border-white/10")}
-                          (for [item nav-items]
-                            (let [active? (= (:path item) (or current-path "/"))]
-                              ($ menu-link {:key (:path item)
-                                            :path (:path item)
-                                            :title (:title item)
-                                            :active? active?
-                                            :on-click close!})))
                           ;; Theme toggle in mobile panel
                           (d/div {:class (s/cx "mt-4 pt-4 border-t" s/border-subtle)}
                                  ($ theme-toggle))))))))
