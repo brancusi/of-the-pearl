@@ -1,6 +1,6 @@
 (ns mockups.mockup-006
   (:require
-   [amp.services.firebase :refer [set-edn]]))
+   [otp.services.firebase :refer [set-edn]]))
 
 (defn hex->hsl
   "Converts a hex color string to [h s l] where h is 0-360, s and l are 0-100."

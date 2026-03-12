@@ -14,7 +14,7 @@
   (let [git-hash (get-git-hash)]
     (update-in build-state
                [:compiler-options :closure-defines]
-               assoc 'amp.config/git-hash git-hash)))
+               assoc 'otp.config/git-hash git-hash)))
 
 (comment
 

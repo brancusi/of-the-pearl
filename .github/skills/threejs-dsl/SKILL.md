@@ -319,7 +319,7 @@ Both existing renderers follow this pattern for the outer scene structure:
 
 #### `:simple-stack-formation`
 
-**Namespace**: `amp.components.threejs.renderers.simple-stack-formation`
+**Namespace**: `otp.components.threejs.renderers.simple-stack-formation`
 
 Takes a `:data` key containing a vector of _levels_. Each level has `:bounds` and `:layers`. Layers stack vertically.
 
@@ -332,7 +332,7 @@ Takes a `:data` key containing a vector of _levels_. Each level has `:bounds` an
 
 #### `:manual-formation`
 
-**Namespace**: `amp.components.threejs.renderers.manual-formation`
+**Namespace**: `otp.components.threejs.renderers.manual-formation`
 
 Takes a `:scene-graph` key — a flat vector of threeagent hiccup elements that are injected directly into the scene tree.
 
@@ -351,7 +351,7 @@ Takes a `:scene-graph` key — a flat vector of threeagent hiccup elements that 
 
 ```clojure
 ;; In your renderer namespace:
-(ns amp.components.threejs.renderers.my-renderer)
+(ns otp.components.threejs.renderers.my-renderer)
 
 (defn render [mockup-data opts]
   ;; Extract your data from mockup-data
@@ -387,7 +387,7 @@ Mockup data is stored as EDN strings in Firebase Realtime Database.
 ### Writing Data from the REPL
 
 ```clojure
-(require '[amp.services.firebase :refer [set-edn]])
+(require '[otp.services.firebase :refer [set-edn]])
 
 (set-edn "piece-id-here"
   {:name     "My Formation"
@@ -557,7 +557,7 @@ Use `^js` on Three.js objects to avoid advanced compilation renaming:
 ### Using `set-edn` to Push a Manual Formation
 
 ```clojure
-(require '[amp.services.firebase :refer [set-edn]])
+(require '[otp.services.firebase :refer [set-edn]])
 
 (set-edn "my-piece"
   {:name "My Scene"

@@ -1,6 +1,6 @@
 (ns mockups.scratch
   (:require
-   [amp.services.firebase :refer [listen-to-path listen-to-edn set-edn]]))
+   [otp.services.firebase :refer [listen-to-path listen-to-edn set-edn]]))
 
 (defn shift-upward
   [dims row-colors align step-change]
@@ -47,7 +47,7 @@
 (comment
 
   ;; Use this if you need to access fns in mockup-view
-  amp.views.mockup-view/render-elements
+  otp.views.mockup-view/render-elements
 
   (set-edn "mockup" {:name "The Big Red"
                      :camera {:position [210 210 210]

@@ -12,35 +12,35 @@
         :asset-path "/js"
         :module-loader true
         :modules
-        {:main {:init-fn amp.core/init!}
+        {:main {:init-fn otp.core/init!}
 
-         :landing-view {:entries [amp.pages.landing.page]
+         :landing-view {:entries [otp.pages.landing.page]
                         :depends-on #{:main}}
 
-         :video-background {:entries [amp.ui.video-background]
+         :video-background {:entries [otp.ui.video-background]
                             :depends-on #{:main}}
 
-         :budget-view {:entries [amp.pages.budget.page]
+         :budget-view {:entries [otp.pages.budget.page]
                        :depends-on #{:main}}
 
-         :mockup-view {:entries [amp.pages.mockup.page]
+         :mockup-view {:entries [otp.pages.mockup.page]
                        :depends-on #{:main}}
 
-         :venue-view {:entries [amp.pages.venue.page]
+         :venue-view {:entries [otp.pages.venue.page]
                       :depends-on #{:main}}
 
-         :artist-view {:entries [amp.pages.artist.page]
+         :artist-view {:entries [otp.pages.artist.page]
                        :depends-on #{:main}}
 
-         :blog-view {:entries [amp.pages.blog.page]
+         :blog-view {:entries [otp.pages.blog.page]
                      :depends-on #{:main}}
 
-         :press-view {:entries [amp.pages.press.page]
+         :press-view {:entries [otp.pages.press.page]
                       :depends-on #{:main}}}
         :build-hooks [(git-hash/hook)]
         :devtools {:reload-strategy :full
                    :repl-pprint true
-                   :preloads [amp.dev user]}
+                   :preloads [otp.dev user]}
         :dev {:js-options {:output-feature-set :es-unsupported
                            :language-in :unsupported}
               :compiler-options {:output-feature-set :es8}}}
@@ -50,31 +50,31 @@
             :asset-path "/js"
             :module-loader true
             :modules
-            {:main {:init-fn amp.core/init!}
+            {:main {:init-fn otp.core/init!}
 
-             :landing-view {:entries [amp.pages.landing.page]
+             :landing-view {:entries [otp.pages.landing.page]
                             :depends-on #{:main}}
 
-             :video-background {:entries [amp.ui.video-background]
+             :video-background {:entries [otp.ui.video-background]
                                 :depends-on #{:main}}
 
-             :budget-view {:entries [amp.pages.budget.page]
+             :budget-view {:entries [otp.pages.budget.page]
                            :depends-on #{:main}}
 
 
-             :mockup-view {:entries [amp.pages.mockup.page]
+             :mockup-view {:entries [otp.pages.mockup.page]
                            :depends-on #{:main}}
 
-             :venue-view {:entries [amp.pages.venue.page]
+             :venue-view {:entries [otp.pages.venue.page]
                           :depends-on #{:main}}
 
-             :artist-view {:entries [amp.pages.artist.page]
+             :artist-view {:entries [otp.pages.artist.page]
                            :depends-on #{:main}}
 
-             :blog-view {:entries [amp.pages.blog.page]
+             :blog-view {:entries [otp.pages.blog.page]
                          :depends-on #{:main}}
 
-             :press-view {:entries [amp.pages.press.page]
+             :press-view {:entries [otp.pages.press.page]
                           :depends-on #{:main}}}
             :build-hooks [(git-hash/hook)]
             :js-options {:output-feature-set :es-unsupported

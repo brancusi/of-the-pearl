@@ -1,14 +1,14 @@
 (ns mockups.water-heater
   (:require
-   [amp.services.firebase :refer [listen-to-path listen-to-edn set-edn]]))
+   [otp.services.firebase :refer [listen-to-path listen-to-edn set-edn]]))
 
 (comment
 
   ;; Use this if you need to access fns in mockup-view
-  amp.views.mockup-view/render-elements
+  otp.views.mockup-view/render-elements
 
-  (amp.views.mockup-view/render-elements
-   (amp.views.mockup-view/create-stack [{:bounds [100 10 100]
+  (otp.views.mockup-view/render-elements
+   (otp.views.mockup-view/create-stack [{:bounds [100 10 100]
                                          :layers [[{:color "red"
                                                     :align :tl
                                                     :dims [49 10 50]

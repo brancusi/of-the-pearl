@@ -4,7 +4,7 @@
    Alternating row patterns (even/odd block dims + gap).
    Each arm's blocks orient lengthwise along the arm direction."
   (:require
-   [amp.services.firebase :refer [set-edn]]))
+   [otp.services.firebase :refer [set-edn]]))
 
 ;; ---------------------------------------------------------------------------
 ;; Configuration
@@ -203,7 +203,7 @@
           :color "grey"}}
 
   ;; Use this if you need to access fns in mockup-view
-  amp.views.mockup-view/render-elements
+  otp.views.mockup-view/render-elements
 
   ;; Push the default V-shape as piece "v-shape-002"
   (set-edn "v-shape-002"

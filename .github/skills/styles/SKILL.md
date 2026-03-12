@@ -28,7 +28,7 @@ The site uses exactly two typefaces. Both `font-display` and `font-body` resolve
 | `font-body`    | Source Sans Pro  | Adobe Typekit | Prose body text (justified)                               |
 | `font-mono`    | Source Code Pro  | Adobe Typekit | Labels, eyebrows, numbers, dates, financial figures, code |
 
-**Style tokens** (in `amp.styles`):
+**Style tokens** (in `otp.styles`):
 
 - `s/font-display` → `"font-display"` → Source Sans Pro
 - `s/font-body` → `"font-body"` → Source Sans Pro
@@ -136,7 +136,7 @@ The canonical section wrapper. Pink accent line + eyebrow + large title.
       "Title")
 ```
 
-Lives in: `amp.components.elements.budget.section-block`
+Lives in: `otp.components.elements.budget.section-block`
 
 ### Written By
 
@@ -148,7 +148,7 @@ Reusable author attribution. Inline eyebrow pattern.
 
 Renders as: `WRITTEN BY  Name` — both in `font-mono text-[10px]`, label in `text-slate-500`, name in `text-slate-400`.
 
-Lives in: `amp.components.elements.written-by`
+Lives in: `otp.components.elements.written-by`
 
 ### Expandable Text Area
 
@@ -164,7 +164,7 @@ Section with preview/expanded toggle. Wraps `section-block` + preview component 
     :footer-text footer})        ;; optional component
 ```
 
-Lives in: `amp.components.elements.expandable-text-area`
+Lives in: `otp.components.elements.expandable-text-area`
 
 ### Data Table Row (Expandable)
 
@@ -229,7 +229,7 @@ Budget table sections use this pattern:
 
 ## Animation (GSAP)
 
-All animations use GSAP (registered in `amp.core/start`). Common patterns:
+All animations use GSAP (registered in `otp.core/start`). Common patterns:
 
 | Element        | Animation                                          |
 | -------------- | -------------------------------------------------- |
@@ -254,8 +254,8 @@ Elements start with `opacity-0` in CSS and are revealed by GSAP.
 | `font-sans`                        | `font-display` for headings, `font-body` for prose |
 | `font-futura-book`                 | `font-display` or `font-body`                      |
 | `neue-haas-grotesk-display`        | Removed — use `font-display` (Source Sans Pro)     |
-| Raw `"font-mono"` in components    | `s/font-data` token from `amp.styles`             |
-| Raw `"font-futura"` in components  | `s/font-display` token from `amp.styles`          |
+| Raw `"font-mono"` in components    | `s/font-data` token from `otp.styles`             |
+| Raw `"font-futura"` in components  | `s/font-display` token from `otp.styles`          |
 | Inline `:style {:font-family ...}` | Tailwind class via token                          |
 | `font-extrabold` on headings       | `font-bold` max (hero only), else `font-semibold` |
 | `font-bold` on section heads       | `font-medium` (`s/heading-section`)               |
@@ -311,7 +311,7 @@ Every color you apply must work in **both** modes. This means:
 
 ### Always Use Style Tokens
 
-The `amp.styles` namespace provides dual-mode tokens for every common color role. **Always prefer tokens over raw Tailwind classes:**
+The `otp.styles` namespace provides dual-mode tokens for every common color role. **Always prefer tokens over raw Tailwind classes:**
 
 | Need                 | Token              | Resolves to (light / dark)                         |
 | -------------------- | ------------------ | -------------------------------------------------- |

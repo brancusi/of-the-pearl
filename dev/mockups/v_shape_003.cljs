@@ -1,5 +1,5 @@
 (ns mockups.v-shape-003
-  (:require [amp.services.firebase :refer [set-edn]]))
+  (:require [otp.services.firebase :refer [set-edn]]))
 
 
 (def ^:private DEG->RAD (/ js/Math.PI 180))

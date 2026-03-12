@@ -1,11 +1,11 @@
 (ns mockups.big-red
   (:require
-   [amp.services.firebase :refer [set-edn]]))
+   [otp.services.firebase :refer [set-edn]]))
 
 (comment
 
   ;; Use this if you need to access fns in mockup-view
-  amp.views.mockup-view/render-elements
+  otp.views.mockup-view/render-elements
 
   (set-edn "big-red-001" {:name "Big Red - 001"
                           :lighting [[:ambient-light {:intensity 0.7}]

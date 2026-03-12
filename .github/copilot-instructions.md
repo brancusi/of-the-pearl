@@ -108,7 +108,7 @@ release/                  # Production output directory (deployed to Netlify)
 
 Always use the project's `defnc` macro (not `helix.core/defnc` directly):
 ```clojure
-(:require [amp.lib.defnc :refer [defnc]])
+(:require [otp.lib.defnc :refer [defnc]])
 
 (defnc my-component [{:keys [title]}]
   (d/div title))
@@ -117,22 +117,22 @@ This wraps helix's `defnc` with `:fast-refresh true` by default.
 
 ### Styling
 
-Use design tokens from `amp.styles` (`s/` alias). Combine classes with `s/cx`:
+Use design tokens from `otp.styles` (`s/` alias). Combine classes with `s/cx`:
 ```clojure
-(:require [amp.styles :as s])
+(:require [otp.styles :as s])
 (d/h2 {:class (s/cx s/heading-display s/text-primary)} title)
 ```
 The site is **dark-first** (`<html class="dark">`). See `.github/skills/styles/SKILL.md` for the full design system.
 
 ### State Management
 
-- Global state: `useReducer` via `amp.providers.main-provider/use-main-state` → returns `[state dispatch!]`
-- Reducer methods: multimethods in `amp.reducers.api/main-reducer`, implementations in `amp.reducers.main-methods/`
+- Global state: `useReducer` via `otp.providers.main-provider/use-main-state` → returns `[state dispatch!]`
+- Reducer methods: multimethods in `otp.reducers.api/main-reducer`, implementations in `otp.reducers.main-methods/`
 - New reducer actions: add a `defmethod` in `main_methods/core.cljs` (or a new file, but require it from `requires.cljs`)
 
 ### Routing
 
-Reitit frontend router in `amp.services.router`. Routes defined inline. Views are lazy-loaded via `amp.utils.lazy-loading/lazy-component` macro (wraps `shadow.lazy`).
+Reitit frontend router in `otp.services.router`. Routes defined inline. Views are lazy-loaded via `otp.utils.lazy-loading/lazy-component` macro (wraps `shadow.lazy`).
 
 ### Module Splitting
 
@@ -153,12 +153,12 @@ The 3D mockup viewer uses `threeagent` (Reagent-style reactive scene graph). Sou
 
 ## Common Pitfalls
 
-- **Do not use `helix.core/defnc` directly** — always use `amp.lib.defnc/defnc` for fast-refresh support.
+- **Do not use `helix.core/defnc` directly** — always use `otp.lib.defnc/defnc` for fast-refresh support.
 - **The medley redef warning during release builds is expected** — do not try to fix it.
 - **`npm run dev` requires a running JVM** — shadow-cljs starts its own, or connects to an existing nREPL server.
 - **Tailwind content scanning in production** scans `release/js/main.*.js` — run `shadow:release` before `postcss:release` (the `release` npm script handles ordering).
 - **No test suite exists** — validate changes by ensuring `npm run release` completes successfully.
-- **File naming**: ClojureScript uses underscores in filenames but hyphens in namespace names (e.g., `landing_view.cljs` → `amp.views.landing-view`).
+- **File naming**: ClojureScript uses underscores in filenames but hyphens in namespace names (e.g., `landing_view.cljs` → `otp.views.landing-view`).
 
 ## Trust These Instructions
 

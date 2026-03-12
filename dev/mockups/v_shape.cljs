@@ -1,11 +1,11 @@
 (ns mockups.v-shape
   (:require
-   [amp.services.firebase :refer [set-edn]]))
+   [otp.services.firebase :refer [set-edn]]))
 
 (comment
 
   ;; Use this if you need to access fns in mockup-view
-  amp.views.mockup-view/render-elements
+  otp.views.mockup-view/render-elements
 
   (set-edn "v-shape-001" {:name "V Shape"
                           :lighting [[:ambient-light {:intensity 0.7}]
