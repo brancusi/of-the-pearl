@@ -51,7 +51,7 @@
   [{:keys [class]}]
   (let [[mode set-mode!] (hooks/use-state
                           (fn []
-                            (or (read-preference) :dark)))
+                            (or (read-preference) :light)))
 
         ;; Track the effective theme so we can style based on it
         ;; rather than relying on dark: CSS which can lag

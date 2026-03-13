@@ -29,8 +29,6 @@
     (hooks/use-effect
      [ref threshold root-margin]
 
-     (tap> {:ref ref
-            :derefed @ref})
      (when @ref
        (let [observer (js/IntersectionObserver.
                        (fn [entries]

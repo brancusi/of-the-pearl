@@ -88,14 +88,12 @@
 ;; These are *atoms*: combine them freely to build any text style.
 
 ;; --- Font families --------------------------------------------------------
-;; Two-font system: Source Sans Pro (display + body) + Source Code Pro (data/mono)
-;; Neue Haas Grotesk Display was removed Feb 2026; both display and body
-;; now resolve to Source Sans Pro via Tailwind config.
-;; FiraCode was removed Feb 2026 in favour of Source Code Pro (Adobe Typekit).
-(def font-display "font-display")              ;; Source Sans Pro — headings, titles, nav
-(def font-body    "font-body")                  ;; Source Sans Pro — prose body copy
-(def font-data    "font-mono")                  ;; Source Code Pro — labels, numbers, eyebrows, code
-;; Aliases (all three resolve to Source Sans Pro; kept for semantic clarity)
+;; Two-font system: OCR-B Std (display/titles) + Fira Code (body/data/mono)
+;; OCR-B Std loaded via Adobe Typekit; Fira Code loaded via Google Fonts.
+(def font-display "font-display")              ;; OCR-B Std — large headings, hero titles
+(def font-body    "font-body")                  ;; Fira Code — prose body copy, nav, descriptions
+(def font-data    "font-mono")                  ;; Fira Code — labels, numbers, eyebrows, code
+;; Aliases
 (def font-ui      font-data)
 (def font-prose   font-body)
 
@@ -192,11 +190,11 @@
 ;; s/em-bold for inline emphasis in prose — never change the base weight.
 (def body-lg
   "Lead paragraph (press release, about, why-support). Slightly larger."
-  (cx font-body text-lg weight-normal text-secondary "text-justify leading-relaxed"))
+  (cx font-body text-lg weight-normal "text-justify leading-relaxed"))
 
 (def body-base
   "Standard reading text."
-  (cx font-body text-base weight-normal text-secondary "text-justify leading-relaxed"))
+  (cx font-body text-base weight-normal "leading-relaxed"))
 
 (def body-sm
   "Smaller detail text (descriptions, footnotes)."

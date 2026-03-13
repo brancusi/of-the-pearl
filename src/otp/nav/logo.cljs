@@ -1,6 +1,7 @@
 (ns otp.nav.logo
   (:require [otp.hooks.use-hover-animations :refer [use-hover-animations]]
-            [otp.hooks.use-scroll-trigger :refer [use-scroll-trigger]]
+            [otp.hooks.use-intersection-observer :refer [use-intersection-observer]]
+
             [otp.hooks.use-toggle-animations :refer [use-toggle-animations]]
             [otp.ui.button :refer [main-button]]
             [otp.utils.window :as win-utils]
@@ -14,10 +15,10 @@
 (defnc logo-nav
   []
   (let [comp-ref (hooks/use-ref "comp-ref")
-        [visited? is-active?] (use-scroll-trigger comp-ref :start (fn [] (- (win-utils/height) (/ (win-utils/height) 8)))
-                                                  :end "1000000px"
-                                                  :markers? false
-                                                  :debug? false)]
+        [visited? is-active?] (use-intersection-observer comp-ref :start (fn [] (- (win-utils/height) (/ (win-utils/height) 8)))
+                                                         :end "1000000px"
+                                                         :markers? false
+                                                         :debug? false)]
     (use-hover-animations comp-ref
                           :over {:opacity 1}
                           :out {:opacity 0.7})

@@ -98,8 +98,8 @@
                    :style #js {:backgroundColor "#2B2B2B"}})
 
            ;; Text — centered, hidden until revealed
-           (d/span {:class (s/cx "pearl-text relative opacity-0 whitespace-nowrap px-5"
-                                 s/font-display
-                                 "text-sm sm:text-base font-light tracking-[0.25em] lowercase")
+           (d/span {:class (s/cx "pearl-text relative opacity-0 whitespace-nowrap px-5 pb-1"
+                                 s/font-body
+                                 "text-sm sm:text-base font-light tracking-[0.15em] lowercase")
                     :style #js {:color "#2B2B2B"}}
                    "of the pearl"))))

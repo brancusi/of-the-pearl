@@ -43,7 +43,9 @@
                    :preloads [otp.dev user]}
         :dev {:js-options {:output-feature-set :es-unsupported
                            :language-in :unsupported}
-              :compiler-options {:output-feature-set :es8}}}
+              :compiler-options {:output-feature-set :es8
+                                 :closure-defines {otp.config/shopify-store-domain "yrg7vk-gy.myshopify.com"
+                                                   otp.config/shopify-storefront-token "c421336ae81228490709aad1e92d8ebc"}}}}
 
   :release {:target :browser
             :output-dir "release/js"

@@ -1,7 +1,8 @@
 (ns otp.pages.landing.teaser
   (:require
    [otp.utils.lazy-loading :refer-macros [lazy-component]]
-   [otp.hooks.use-scroll-trigger :refer [use-scroll-trigger]]
+
+   [otp.hooks.use-intersection-observer :refer [use-intersection-observer]]
    [otp.lib.defnc :refer [defnc]]
    [otp.styles :as s]
    [helix.core :refer [$]]
@@ -13,7 +14,7 @@
 (defnc teaser-section
   []
   (let [outer-ref (hooks/use-ref "outer-ref")
-        [_visited? is-active?] (use-scroll-trigger outer-ref {:end "bottom"})
+        [_visited? is-active?] (use-intersection-observer outer-ref {:end "bottom"})
         block-bg "bg-black/70 px-3 py-1.5 inline decoration-clone"
         block-bg-light "bg-black/50 px-3 py-1 inline decoration-clone"
         block-bg-info "bg-black/60 px-2 py-1 inline decoration-clone"

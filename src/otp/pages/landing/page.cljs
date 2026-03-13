@@ -8,6 +8,7 @@
    [otp.pages.landing.in-minor-keys :refer [in-minor-keys]]
    [otp.pages.landing.venue :refer [location-section]]
    [otp.pages.landing.hero :refer [mobile-hero-section]]
+   [otp.pages.landing.bent-collection :refer [bent-collection-section]]
    [otp.pages.landing.press-release :refer [press-release]]
    [otp.pages.landing.teaser :refer [teaser-section]]
    [otp.hooks.use-media-query :refer [use-touch-enabled]]
@@ -30,6 +31,11 @@
           {:key "hero"
            :section-id "hero"}
           ($ mobile-hero-section))
+
+       ($ section
+          {:key "bent-collection"
+           :section-id "bent-collection"}
+          ($ bent-collection-section))
 
        #_($ section
             {:key "teaser"

@@ -64,64 +64,65 @@
          (.addEventListener js/document "pointerdown" handler)
          (fn [] (.removeEventListener js/document "pointerdown" handler)))))
 
-    (<>
-     (d/nav {:ref nav-ref
-             :class "fixed top-0 left-0 right-0 z-40"}
+    (d/nav {:ref nav-ref
+            :class "fixed top-0 left-0 right-0 z-40"}
 
-            ;; ---- Top bar ----
-            (d/div {:class (s/cx "relative flex items-center justify-between"
-                                 "px-4 md:px-8 h-14"
-                                 "bg-white"
-                                 s/border-glass)}
+           ;; ---- Top bar ----
+           (d/div {:class (s/cx "relative flex items-center justify-between"
+                                "px-4 md:px-8 h-14"
+                                "bg-white/80"
+                                s/border-glass)}
 
-                   ;; Left — logo
-                   (d/div {:class "flex items-center gap-3"}
-                          ;; Slate logo on mobile
-                          (d/img {:src   "/images/graphics/logo_slate.svg"
-                                  :alt   "Of The Pearl"
-                                  :class "md:hidden h-8 w-auto"})
-                          ;; Slate logo on desktop
-                          (d/img {:src   "/images/graphics/logo_slate.svg"
-                                  :alt   "Of The Pearl"
-                                  :class "hidden md:block h-8 w-auto"}))
+                  ;; Left — logo
+                  (d/div {:class "flex items-center gap-3"}
+                         ;; Slate logo on mobile
+                         (d/img {:src   "/images/graphics/logo_slate.svg"
+                                 :alt   "Of The Pearl"
+                                 :class "md:hidden h-[1.2rem] w-auto"})
+                         ;; Slate logo on desktop
+                         (d/img {:src   "/images/graphics/logo_slate.svg"
+                                 :alt   "Of The Pearl"
+                                 :class "hidden md:block h-8 w-auto"}))
 
-                   ;; Center — animated pearl logo (absolute centered)
-                   (d/div {:class "absolute inset-0 flex items-center justify-center pointer-events-none px-32 md:px-48"}
-                          (d/div {:class "w-full pointer-events-auto"}
-                                 ($ pearl-logo {:should-play? true})))
+                  ;; Center — animated pearl logo (absolute centered)
+                  (d/div {:class "absolute inset-0 flex items-center justify-center pointer-events-none"}
+                         (d/div {:class "pointer-events-auto w-6/12"}
+                                ($ pearl-logo {:should-play? true})))
 
-                   ;; Right — shopping bag + theme toggle + mobile hamburger
-                   (d/div {:class "flex items-center gap-4"}
-                          ;; Shopping bag
-                          (d/button {:class (s/cx "p-1" s/text-primary
-                                                  "hover:text-pink-600 dark:hover:text-pink-300"
-                                                  "transition-colors duration-200")
-                                     :aria-label "Shop"}
-                                    ($ ShoppingBagIcon {:class "w-5 h-5"}))
+                  ;; Right — shopping bag + theme toggle + mobile hamburger
+                  (d/div {:class "flex items-center gap-4"}
+                         ;; Shopping bag (hidden on mobile)
+                         (d/button {:class (s/cx "hidden md:inline-flex items-center gap-1.5 p-1"
+                                                 "text-[#2B2B2B]"
+                                                 "hover:text-pink-600 dark:hover:text-pink-300"
+                                                 "transition-colors duration-200")
+                                    :aria-label "Shop"}
+                                   (d/span {:class "text-xs font-medium uppercase tracking-wide"} "Shop")
+                                   ($ ShoppingBagIcon {:class "w-5 h-5"}))
 
-                          ;; Theme toggle (desktop)
-                          (d/div {:class (s/cx "hidden md:flex items-center pl-4 border-l"
-                                               s/border-subtle)}
-                                 #_($ theme-toggle))
+                         ;; Theme toggle (desktop)
+                         (d/div {:class (s/cx "hidden md:flex items-center pl-4 border-l"
+                                              s/border-subtle)}
+                                #_($ theme-toggle))
 
-                          ;; Mobile hamburger button
-                          (d/button {:class (s/cx "md:hidden p-2"
-                                                  s/text-primary
-                                                  "hover:text-pink-600 dark:hover:text-pink-300"
-                                                  "transition-colors duration-200")
-                                     :on-click toggle!
-                                     :aria-label (if open? "Close menu" "Open menu")}
-                                    ($ hamburger-icon {:open? open? :class "w-6 h-6"}))))
+                         ;; Mobile hamburger button
+                         (d/button {:class (s/cx "md:hidden p-2"
+                                                 "text-[#2B2B2B]"
+                                                 "hover:text-pink-600 dark:hover:text-pink-300"
+                                                 "transition-colors duration-200")
+                                    :on-click toggle!
+                                    :aria-label (if open? "Close menu" "Open menu")}
+                                   ($ hamburger-icon {:open? open? :class "w-6 h-6"}))))
 
-            ;; ---- Mobile slide-down panel (frosted glass) ----
-            (d/div {:class (s/cx "md:hidden overflow-hidden"
-                                 "transition-all duration-300 ease-in-out"
-                                 (if open?
-                                   "max-h-[500px] opacity-100"
-                                   "max-h-0 opacity-0"))}
-                   (d/div {:class (s/cx s/bg-glass
-                                        "px-6 pb-6 pt-2"
-                                        "border-t border-white/10")}
-                          ;; Theme toggle in mobile panel
-                          (d/div {:class (s/cx "mt-4 pt-4 border-t" s/border-subtle)}
-                                 ($ theme-toggle))))))))
+           ;; ---- Mobile slide-down panel (frosted glass) ----
+           (d/div {:class (s/cx "md:hidden overflow-hidden"
+                                "transition-all duration-300 ease-in-out"
+                                (if open?
+                                  "max-h-[500px] opacity-100"
+                                  "max-h-0 opacity-0"))}
+                  (d/div {:class (s/cx s/bg-glass
+                                       "px-6 pb-6 pt-2"
+                                       "border-t border-white/10")}
+                         ;; Theme toggle in mobile panel
+                         (d/div {:class (s/cx "mt-4 pt-4 border-t" s/border-subtle)}
+                                ($ theme-toggle)))))))
