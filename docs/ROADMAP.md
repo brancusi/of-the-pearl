@@ -1,5 +1,48 @@
 # Roadmap
 
+## 2026-03-13 — Storybook Integration for Component Development
+
+**Goal:** Add Storybook as a component development and visual review tool so UI elements can be built, tested, and documented in isolation — without running the full app.
+
+**Current state:**
+
+- No component dev environment exists. To see a component, you must run the full app and navigate to the page containing it.
+- The project uses Helix (`defnc` macro) which produces standard React function components. This makes Storybook integration straightforward since no React wrapper translation is needed.
+- UI components live in `src/otp/ui/` and page-level sections in `src/otp/pages/`. Styling uses centralized Tailwind tokens from `otp.styles`.
+
+**Target state:**
+
+- Storybook 9 installed and configured with a React/Vite builder.
+- A `:storybook` shadow-cljs build (`:npm-module` target) compiles selected components to JS modules consumable by Storybook.
+- A thin Helix adapter (`otp.storybook.adapter`) bridges Helix components for Storybook's CSF (Component Story Format).
+- Example stories exist for `main-button` and `section-header` demonstrating the pattern.
+- `npx shadow-cljs watch storybook` + `npx storybook dev` starts the component dev environment.
+- Tailwind config scans Storybook output for class names.
+
+**Key decisions:**
+
+- **Direct Storybook integration (no storybook-cljs dependency)** — Helix components are already React function components; the only bridge needed is `js->clj` on incoming props. The `storybook-cljs` library (factorhouse) adds complexity (tagged-JSON, build hooks shelling out to npx, generated JS files) that's unnecessary for Helix. It's also very young (9 stars, 1 contributor). We maintain a ~10-line adapter instead.
+- **`:npm-module` target** — shadow-cljs compiles CLJS namespaces to CommonJS/ESM modules that Storybook can import directly. This is the standard approach for consuming CLJS from JS tools.
+- **Stories in `dev-src/stories/`** — keeps dev-only story code separate from production source, excluded from production builds.
+- **Standard CSF stories** — story files use Storybook's native Component Story Format, giving full addon/tooling compatibility.
+
+### Tasks
+
+- [x] **Step 1 — Initialize Storybook and install npm dependencies** (2026-03-13)
+      Run `npx storybook@latest init --type react` and install required packages.
+- [x] **Step 2 — Add :storybook build to shadow-cljs.edn** (2026-03-13)
+      Configure `:npm-module` target, entries, and output directory.
+- [x] **Step 3 — Write Helix adapter** (2026-03-13)
+      Create `dev-src/otp/storybook/adapter.cljs` with component wrapping utility.
+- [x] **Step 4 — Create example stories** (2026-03-13)
+      Add CSF stories for `main-button` and `section-header`.
+- [x] **Step 5 — Configure Tailwind and Storybook preview** (2026-03-13)
+      Update Tailwind content paths and Storybook preview to load CSS and dark mode.
+- [x] **Step 6 — Add npm scripts** (2026-03-13)
+      Add `storybook:dev` and `storybook:build` convenience scripts.
+- [x] **Step 7 — Validate end-to-end** (2026-03-13)
+      Compile storybook build and verify no errors.
+
 <!-- Add new initiatives above this line -->
 
 ## 2026-03-13 — Shopify Storefront API Integration

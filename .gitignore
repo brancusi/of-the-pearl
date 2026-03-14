@@ -28,6 +28,10 @@ media_server
 cljs-runtime
 .DS_Store
 
+# Storybook
+.storybook/cljs-out/
+storybook-static/
+
 # Clojure related
 .portal
 

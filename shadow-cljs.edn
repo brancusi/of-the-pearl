@@ -86,4 +86,13 @@
                                :externs ["externs/three.ext.js"]
                                :optimizations :advanced
                                :pretty-print true
-                               :pseudo-names true}}}}
+                               :pseudo-names true}}
+
+  :storybook {:target :esm
+              :output-dir ".storybook/cljs-out"
+              :modules {:stories {:entries [otp.storybook.stories]
+                                  :exports {MainButton otp.storybook.stories/MainButton
+                                            SectionHeader otp.storybook.stories/SectionHeader
+                                            SectionEyebrow otp.storybook.stories/SectionEyebrow}}}
+              :compiler-options {:output-feature-set :es8}
+              :devtools {:enabled false}}}}
