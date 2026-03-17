@@ -4,6 +4,7 @@
    [otp.hooks.use-intersection-observer :refer [use-intersection-observer]]
    [otp.ui.image-overlay :refer [lazy-image-with-overlay]]
    [otp.ui.animated-lines :refer [animated-lines]]
+   [otp.ui.action-button :refer [action-button]]
    [otp.ui.icons :refer [ArrowLongDownIcon]]
    [otp.lib.defnc :refer [defnc]]
    [helix.core :refer [$]]
@@ -64,7 +65,12 @@
                     :separator :br
                     :split-type "chars,lines"
                     :text-delay 0.3
-                    :text-stagger 0.03}))))
+                    :text-stagger 0.03}))
+
+         (d/div {:class "absolute bottom-12 right-12 sm:bottom-16 sm:right-16"}
+                ($ action-button {:title "don't shop"
+                                  :size :lg
+                                  :strikethrough true}))))
 
      ;; White bottom bar
      (d/div

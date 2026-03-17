@@ -18,7 +18,7 @@ export default {
 
 export const Default = {
   args: {
-    title: "Explore!",
+    title: "Explore",
     size: "md",
     color: "pink",
   },

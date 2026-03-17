@@ -1,5 +1,29 @@
 # Roadmap
 
+## 2026-03-14 — Storybook Story Scaffold CLI
+
+**Goal:** Reduce repetitive Storybook wiring by generating the standard CLJS/Storybook integration files from one command.
+
+**Current state:**
+
+- Adding a new story requires manually updating three places: `storybook-src/otp/storybook/stories.cljs`, `shadow-cljs.edn` exports, and a new `storybook-src/stories/*.stories.js` file.
+- The process is mechanical and easy to drift (missed export, naming mismatch, or wrong story filename).
+
+**Target state:**
+
+- A single CLI command scaffolds Storybook integration for a Helix component.
+- The command appends the wrapped component export in `stories.cljs`, updates the `:storybook` `:exports` map in `shadow-cljs.edn`, and creates a starter CSF story file.
+- The tool supports dry-run mode for safe review.
+
+### Tasks
+
+- [x] **Step 1 — Create Storybook scaffold script** (2026-03-14)
+      Add a Node CLI that accepts a component var path and generates the required Storybook wiring.
+- [x] **Step 2 — Add npm script for the CLI** (2026-03-14)
+      Expose the tool as `npm run storybook:create`.
+- [x] **Step 3 — Validate the CLI runs** (2026-03-14)
+      Run the script in `--help`/`--dry-run` mode to confirm argument parsing and non-destructive flow.
+
 ## 2026-03-13 — Storybook Integration for Component Development
 
 **Goal:** Add Storybook as a component development and visual review tool so UI elements can be built, tested, and documented in isolation — without running the full app.
@@ -23,7 +47,7 @@
 
 - **Direct Storybook integration (no storybook-cljs dependency)** — Helix components are already React function components; the only bridge needed is `js->clj` on incoming props. The `storybook-cljs` library (factorhouse) adds complexity (tagged-JSON, build hooks shelling out to npx, generated JS files) that's unnecessary for Helix. It's also very young (9 stars, 1 contributor). We maintain a ~10-line adapter instead.
 - **`:npm-module` target** — shadow-cljs compiles CLJS namespaces to CommonJS/ESM modules that Storybook can import directly. This is the standard approach for consuming CLJS from JS tools.
-- **Stories in `dev-src/stories/`** — keeps dev-only story code separate from production source, excluded from production builds.
+- **Stories in `storybook-src/stories/`** — keeps dev-only story code separate from production source, excluded from production builds.
 - **Standard CSF stories** — story files use Storybook's native Component Story Format, giving full addon/tooling compatibility.
 
 ### Tasks
@@ -33,7 +57,7 @@
 - [x] **Step 2 — Add :storybook build to shadow-cljs.edn** (2026-03-13)
       Configure `:npm-module` target, entries, and output directory.
 - [x] **Step 3 — Write Helix adapter** (2026-03-13)
-      Create `dev-src/otp/storybook/adapter.cljs` with component wrapping utility.
+      Create `storybook-src/otp/storybook/adapter.cljs` with component wrapping utility.
 - [x] **Step 4 — Create example stories** (2026-03-13)
       Add CSF stories for `main-button` and `section-header`.
 - [x] **Step 5 — Configure Tailwind and Storybook preview** (2026-03-13)

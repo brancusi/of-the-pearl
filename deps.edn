@@ -11,7 +11,7 @@
 
  :aliases
  {:dev
-  {:extra-paths ["dev" "dev-src"]
+  {:extra-paths ["dev" "storybook-src"]
    :extra-deps
    {nrepl/nrepl {:mvn/version "1.5.1"}
     party.donut/system {:mvn/version "1.0.257"}

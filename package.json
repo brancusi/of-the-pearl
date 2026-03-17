@@ -25,6 +25,7 @@
     "clean:release": "rm -f release/js/*.js release/css/main*.css",
     "shadow-storybook:dev": "npx shadow-cljs watch storybook",
     "storybook-ui:dev": "npx storybook dev -p 6006 --no-open",
+    "storybook:create": "node scripts/create-storybook-story.js",
     "storybook:build": "npx shadow-cljs release storybook && npx storybook build"
   },
   "dependencies": {

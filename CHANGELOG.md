@@ -1,5 +1,24 @@
 # Changelog
 
+## 2026-03-14 — Storybook Story Scaffold CLI
+
+**Rationale:** Adding a Storybook story in this codebase required editing three files by hand, and the process is mostly mechanical. This made it easy to miss one wiring step and waste time on avoidable setup mistakes.
+**Summary:** Added a small repository-specific CLI to scaffold Storybook integration for Helix components. The command updates the CLJS stories registry, shadow-cljs `:exports`, and creates a starter CSF story file.
+
+### Changes
+
+- Added `scripts/create-storybook-story.js`.
+- Added npm script `storybook:create` in `package.json`.
+- CLI now supports:
+  - `--component otp.some.namespace/component-var` (required)
+  - Optional `--title`, `--category`, `--story-file`, `--extension` (`js|jsx`)
+  - `--dry-run` mode for non-destructive preview
+
+### Migration Notes
+
+- Usage: `npm run storybook:create -- --component otp.ui.button/main-button`.
+- For preview-only runs: `npm run storybook:create -- --component otp.ui.button/main-button --dry-run`.
+
 ## 2026-03-13 — Storybook 10 Upgrade & ESM Fix
 
 **Rationale:** Storybook 8's `:npm-module` (CommonJS) output was incompatible with Vite's ESM-only import system, causing "does not provide an export" errors. After switching to `:esm`, Vite's per-file cache-busting timestamps caused Google Closure's `goog.module()` to fire twice, producing "Namespace already declared" errors.
@@ -25,22 +44,22 @@
 ### Changes
 
 - Installed Storybook 8 npm packages (`@storybook/react`, `@storybook/react-vite`, `@storybook/addon-essentials`, `@storybook/blocks`, `@storybook/test`, `storybook`, `vite`).
-- Created `.storybook/main.js` — Storybook config pointing to stories in `dev-src/stories/` with a Vite alias for CLJS output.
+- Created `.storybook/main.js` — Storybook config pointing to stories in `storybook-src/stories/` with a Vite alias for CLJS output.
 - Created `.storybook/preview.jsx` — dark-mode decorator and Tailwind CSS import.
 - Added `:storybook` build to `shadow-cljs.edn` — `:npm-module` target outputting to `.storybook/cljs-out/`.
-- Added `"dev-src"` to `:dev` alias `:extra-paths` in `deps.edn`.
-- Created `dev-src/otp/storybook/adapter.cljs` — wraps Helix components for Storybook by converting JS props to Clojure maps.
-- Created `dev-src/otp/storybook/stories.cljs` — entry namespace exporting wrapped components (`MainButton`, `SectionHeader`, `SectionEyebrow`).
-- Created `dev-src/stories/Button.stories.js` and `dev-src/stories/SectionHeader.stories.jsx` — CSF stories with controls.
+- Added `"storybook-src"` to `:dev` alias `:extra-paths` in `deps.edn`.
+- Created `storybook-src/otp/storybook/adapter.cljs` — wraps Helix components for Storybook by converting JS props to Clojure maps.
+- Created `storybook-src/otp/storybook/stories.cljs` — entry namespace exporting wrapped components (`MainButton`, `SectionHeader`, `SectionEyebrow`).
+- Created `storybook-src/stories/Button.stories.js` and `storybook-src/stories/SectionHeader.stories.jsx` — CSF stories with controls.
 - Added `shadow:storybook`, `storybook:dev`, `storybook:build` npm scripts to `package.json`.
-- Updated `tailwind.config.js` to scan `dev-src/**/*.cljs` in dev mode.
+- Updated `tailwind.config.js` to scan `storybook-src/**/*.cljs` in dev mode.
 - Added `.storybook/cljs-out/` and `storybook-static/` to `.gitignore`.
 
 ### Migration Notes
 
 - Run `npm install` to install new Storybook dev dependencies.
 - To use Storybook: run `npm run shadow:storybook` in one terminal, then `npm run storybook:dev` in another. Storybook UI at `http://localhost:6006`.
-- To add a new component to Storybook: (1) export a wrapped version from `dev-src/otp/storybook/stories.cljs`, (2) create a `.stories.js` file in `dev-src/stories/` that imports it.
+- To add a new component to Storybook: (1) export a wrapped version from `storybook-src/otp/storybook/stories.cljs`, (2) create a `.stories.js` file in `storybook-src/stories/` that imports it.
 
 <!-- Append new entries above this line -->
 

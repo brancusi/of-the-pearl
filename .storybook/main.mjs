@@ -34,6 +34,48 @@ function cljsBundlePlugin() {
         platform: "browser",
         external: ["react", "react/jsx-runtime", "react-dom"],
         logLevel: "warning",
+        // ClojureScript runtime uses eval in generated core helpers; keep
+        // warning output clean while preserving bundling behavior.
+        logOverride: {
+          "direct-eval": "silent",
+        },
+        plugins: [
+          {
+            // shadow-cljs bundles npm packages (React, etc.) as internal
+            // modules (module$node_modules$react$...).  esbuild's `external`
+            // can't catch these because they aren't bare specifiers.  This
+            // plugin intercepts those files at load time and replaces them
+            // with re-exports from the bare package name so that esbuild
+            // externalizes them and the app shares Storybook's React instance.
+            name: "shadow-cljs-externalize-react",
+            setup(b) {
+              b.onLoad(
+                { filter: /module\$node_modules\$react\$index\.js$/ },
+                () => ({
+                  contents:
+                    'import React from "react"; shadow$provide.module$node_modules$react$index = function(require, module) { module.exports = React; };',
+                  loader: "js",
+                }),
+              );
+              b.onLoad(
+                { filter: /module\$node_modules\$react\$jsx_runtime\.js$/ },
+                () => ({
+                  contents:
+                    'import JSXRuntime from "react/jsx-runtime"; shadow$provide.module$node_modules$react$jsx_runtime = function(require, module) { module.exports = JSXRuntime; };',
+                  loader: "js",
+                }),
+              );
+              // The CJS development bundles are no longer needed — skip them
+              // so they don't add dead React code to the output.
+              b.onLoad(
+                {
+                  filter: /module\$node_modules\$react\$cjs\$react[_a-z]*\.js$/,
+                },
+                () => ({ contents: "", loader: "js" }),
+              );
+            },
+          },
+        ],
       });
       return result.outputFiles[0].text;
     },
@@ -54,7 +96,7 @@ function cljsBundlePlugin() {
 
 /** @type { import('@storybook/react-vite').StorybookConfig } */
 const config = {
-  stories: ["../dev-src/stories/**/*.stories.@(js|jsx)"],
+  stories: ["../storybook-src/stories/**/*.stories.@(js|jsx)"],
   framework: {
     name: "@storybook/react-vite",
     options: {},

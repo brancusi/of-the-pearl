@@ -9,7 +9,7 @@ module.exports = {
   content:
     process.env.NODE_ENV == "production"
       ? ["./release/js/main.*.js", "./src/**/*.cljs", "./src/**/*.cljc"]
-      : ["./src/**/*.cljs", "./src/**/*.cljc", "./dev-src/**/*.cljs"],
+      : ["./src/**/*.cljs", "./src/**/*.cljc", "./storybook-src/**/*.cljs"],
   theme: {
     extend: {
       fontFamily: {

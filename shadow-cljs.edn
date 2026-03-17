@@ -93,6 +93,7 @@
               :modules {:stories {:entries [otp.storybook.stories]
                                   :exports {MainButton otp.storybook.stories/MainButton
                                             SectionHeader otp.storybook.stories/SectionHeader
-                                            SectionEyebrow otp.storybook.stories/SectionEyebrow}}}
+                                            SectionEyebrow otp.storybook.stories/SectionEyebrow
+                                            ActionButton otp.storybook.stories/ActionButton}}}
               :compiler-options {:output-feature-set :es8}
               :devtools {:enabled false}}}}

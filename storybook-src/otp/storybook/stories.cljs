@@ -4,6 +4,7 @@
    available as npm-module exports in .storybook/cljs-out/."
   (:require
    [otp.storybook.adapter :as adapter]
+   [otp.ui.action-button :as action-button]
    [otp.ui.button :as button]
    [otp.ui.section-header :as section-header]))
 
@@ -18,3 +19,6 @@
 
 (def ^:export SectionEyebrow
   (adapter/wrap-component section-header/section-eyebrow))
+
+(def ^:export ActionButton
+  (adapter/wrap-component action-button/action-button))
